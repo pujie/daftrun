@@ -11,23 +11,13 @@ class _AddNote extends State<AddNote> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'Name',
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Harus diisi';
-              }
-              return null;
-            },
-          )
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Penambahan Catatan"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Text("Simpan"),
       ),
     );
   }

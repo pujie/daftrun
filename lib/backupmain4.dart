@@ -5,7 +5,6 @@ import 'package:daftrun/pages/add_note.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -24,7 +23,7 @@ class Home extends StatefulWidget {
 class _Home extends State<Home> {
   final TextEditingController _x = TextEditingController();
   final List<String> entries = <String>['A', 'B'];
-  final _daftar = FirebaseFirestore.instance.collection('mynote').snapshots();
+  final List<dynamic>? notes = GetNotes();
   @override
   void dispose() {
     _x.dispose();
@@ -35,18 +34,27 @@ class _Home extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Daftrun v1.0')),
-      body: StreamBuilder(
-        stream: _daftar,
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return const Text("Eror");
-          }
-          if (snapshot.hasData) {
-            return const Text("Has Data");
-          }
-          var docs = snapshot.data!.docs;
-          return Text('hueaaa ${docs.length}');
-        },
+      body: Column(
+        children: [
+          const SearchBar(),
+          Expanded(
+              child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        print("ttappe");
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: Colors.grey,
+                          height: 100,
+                        ),
+                      ),
+                    );
+                  }))
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
