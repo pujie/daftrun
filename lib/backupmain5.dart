@@ -25,17 +25,10 @@ class _Home extends State<Home> {
   final TextEditingController _x = TextEditingController();
   final List<String> entries = <String>['A', 'B'];
   final _daftar = FirebaseFirestore.instance.collection('mynote').snapshots();
-  final List<Object> _historyList = [];
   @override
   void dispose() {
     _x.dispose();
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
   }
 
   @override
@@ -64,14 +57,6 @@ class _Home extends State<Home> {
         child: const Text("+"),
       ),
     );
-  }
-
-  Future getUsersQuestionsLists() async {
-    var data =
-        await FirebaseFirestore.instance.collection("mynote").doc().get();
-    setState(() {
-      _historyList = List.from(data.docs.map(doc) => Question.fromSnapshot(doc))
-    });
   }
 }
 
